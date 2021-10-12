@@ -1,0 +1,36 @@
+<%- include('../../partials/header_admin.ejs'); %>
+<link rel="stylesheet" href="/css/admin.css">
+
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item"><a href="/admin/users/view">Usuários</a></li>
+      <li class="menu-superior-item"><a href="/admin/posts/view">Postagens</a></li>
+      <li class="menu-superior-item menu-superior-disable">Categorias</li>
+    </ol>
+  </nav>
+</section>
+
+<section class="breadcrumb">
+  <nav>
+    <ol>
+      <li class="breadcrumb-item"><a href="/admin/categories/view">Categorias</a></li>
+      <li class="breadcrumb-item breadcrumb-active" aria-current="page">Editar Categoria</li>
+    </ol>
+  </nav>
+</section>
+
+<div class="container-500">
+
+  <h1 class="form-title-center">Editar Categoria</h1>
+  <div class="form-login">
+    <form method="POST" action="/admin/categories/update">
+      <input type="hidden" name="id" value="<%= category.id %>">
+      <input class="form-input" type="text" value="<%= category.name %>" name="name" placeholder="Digite seu nome">
+      <button class="btn btn-success">Atualizar Categoria</button>
+    </form>
+  </div>
+
+</div>
+
+<%- include('../../partials/footer.ejs'); %>

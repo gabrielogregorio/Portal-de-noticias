@@ -1,0 +1,75 @@
+<%- include('partials/header.ejs'); %>
+<link href="/css/noticia.css" rel="stylesheet">
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item"><a href="/">Inicio</a></li>
+      <% categories.forEach(category => {%>
+        <li class="menu-superior-item"><a href="/?busca=&category=<%= category.id %>"><%= category.name %></a></li>
+      <%})%>
+    </ol>
+  </nav>
+</section>
+
+
+<section class="breadcrumb">
+  <nav>
+    <ol>
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item breadcrumb-active" aria-current="page"></li>
+    </ol>
+  </nav>
+</section>
+
+  <section class="base-noticias">
+    <div class="base-grid-noticias">
+      <div class="base-grid-bloco-conteudo">
+
+        <div class="noticia-blog">
+          <h1> <%= post.title %></h1>
+          <img src="/images/posts/<%= post?.img %>" alt="">
+          <div class="noticia-perfil">
+            <% if(post.author?.img) { %>
+              <img src="/images/author/<%= post.author?.img%>" alt="">
+            <% } %>
+
+            <% if(post.author?.name) { %>
+              <p>Por <%= post.author?.name %></p>
+            <% } else { %>
+              <p>Por autor do blog</p>
+            <% } %>
+
+          </div>
+          <%- post.body %>
+
+        </div> <!-- noticia-blog -->
+      </div><!-- base-grid-bloco-conteudo -->
+
+
+      <div class="base-grid-bloco-sidebar">
+        <div class="mais-lidas-titulo">
+          <h3>As mais lidas</h3>
+        </div><!-- mais-lidas-titulo -->
+        <div class="grid-noticias-mais-lidas">
+          <% postsMostViews?.slice(0, 4).forEach(post => {%>
+            <div class="grid-mais-lida-item">
+              <a href="/news/<%= post.slug %>"><img src="/images/posts/<%= post.img %>" alt=""></a>
+              <div class="grid-mais-lida-conteudo">
+                <a href="/news/<%= post.slug %>"><h3 class="grid-mais-lida-titulo"><%= post.title %></h3></a>
+                <a href="/news/<%= post.slug %>"><p><%= post.description.slice(0, 100) %></p></a>
+              </div><!-- grid-mais-lida-conteudo -->
+            </div><!-- grid-mais-lida-item -->
+          <% }) %>
+
+        </div><!-- grid-noticias-mais-lidas -->
+      </div><!-- base-grid-bloco-sidebar -->
+    </div><!-- grid-noticias -->
+  </section><!-- noticias -->
+
+
+
+    </div><!-- grid-noticias -->
+  </section><!-- noticias -->
+
+
+  <%- include('partials/footer.ejs'); %>

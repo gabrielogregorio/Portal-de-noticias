@@ -1,0 +1,69 @@
+<%- include('partials/header.ejs'); %>
+<link href="/css/principal.css" rel="stylesheet">
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item"><a href="/">Inicio</a></li>
+      <% categories.forEach(category => {%>
+        <li class="menu-superior-item"><a href="/?busca=&category=<%= category.id %>"><%= category.name %></a></li>
+      <%})%>
+    </ol>
+  </nav>
+</section>
+
+
+  <section class="base-noticias">
+    <div class="base-grid-noticias">
+      <div class="base-grid-bloco-conteudo">
+        <div class="home-grid-conteudo">
+
+          <% result.posts.slice(0, 5).forEach(post =>{ %>
+
+            <div class="card-publicacao">
+              <a href="/news/<%= post.slug %>"><img class="card-imagem" src="/images/posts/<%= post.img %>" alt=""></a>
+
+              <p class="subtitulo"><%= post.category %></p>
+              <h3><a href="/news/<%= post.slug %>"><%= post.title %></a></h3>
+              <p><a href="/news/<%= post.slug %>"><%- post.description %></a></p>
+            </div><!-- card-publicacao -->
+          <% }) %>
+
+        </div><!-- home-grid-conteudo -->
+      </div><!-- base-grid-bloco-conteudo -->
+
+      <div class="base-grid-bloco-sidebar">
+        <div class="mais-lidas-titulo">
+          <h3>As mais lidas</h3>
+        </div><!-- mais-lidas-titulo -->
+        <div class="grid-noticias-mais-lidas">
+          <% postsMostViews?.slice(0, 4).forEach(post => {%>
+            <div class="grid-mais-lida-item">
+              <a href="/news/<%= post.slug %>"><img src="/images/posts/<%= post.img %>" alt=""></a>
+              <div class="grid-mais-lida-conteudo">
+                <a href="/news/<%= post.slug %>"><h3 class="grid-mais-lida-titulo"><%= post.title %></h3></a>
+                <a href="/news/<%= post.slug %>"><p><%= post.description.slice(0, 100) %></p></a>
+              </div><!-- grid-mais-lida-conteudo -->
+            </div><!-- grid-mais-lida-item -->
+          <% }) %>
+
+        </div><!-- grid-noticias-mais-lidas -->
+      </div><!-- base-grid-bloco-sidebar -->
+
+    </div><!-- grid-noticias -->
+  </section><!-- noticias -->
+
+  <div class="pagination">
+    <% if (result.page > 2 ) {%>
+      <a class="pagination-btn" href="/posts/page/<%= result.page -1 %>">Anterior </a>
+    <% } else if (result.page == 2) { %>
+      <a class="pagination-btn" href="/">Anterior </a>
+    <% } %>
+
+    <% if (result.proximaPagina) {%>
+      <a class="pagination-btn" href="/posts/page/<%= result.page + 1 %>">Próximo</a>
+    <% } else {%>
+      <button class="pagination-btn-disable">Próximo</button>
+    <% }%>
+      </div>
+
+  <%- include('partials/footer.ejs'); %>

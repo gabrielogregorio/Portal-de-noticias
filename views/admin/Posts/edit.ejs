@@ -1,0 +1,76 @@
+<%- include('../../partials/header_admin.ejs'); %>
+<link rel="stylesheet" href="/css/admin.css">
+
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item"><a href="/admin/users/view">Usuários</a></li>
+      <li class="menu-superior-item menu-superior-disable">Postagens</li>
+      <li class="menu-superior-item"><a href="/admin/categories/view">Categorias</a></li>
+    </ol>
+  </nav>
+</section>
+
+<section class="breadcrumb">
+  <nav>
+    <ol>
+      <li class="breadcrumb-item"><a href="/admin/posts/view">Postagens</a></li>
+      <li class="breadcrumb-item breadcrumb-active" aria-current="page">Editar Postagem</li>
+    </ol>
+  </nav>
+</section>
+
+
+<div class="container">
+  <h2 class="form-title">Editar Artigo</h2>
+
+  <form method="POST" action="/admin/posts/update" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<%= post.id %>">
+    <input class="form-input form-input-100" name="title" type="text" placeholder="Defina o titulo do artigo" value="<%= post.title %>"><br>
+    <textarea class="form-input form-input-100" name="description" rows="5" placeholder="Escreva uma descrição"><%= post.description %></textarea><br>
+
+    <label for="imagem_post">Foto de perfil</label>
+    <input id="imagem_post" type="file" name="image">
+
+    <textarea class="form-input" name="body" rows="40" id="post" placeholder="Escreva seu artigo"></textarea><br>
+    <label>Categoria</label>
+    <select class="form-input"  name="category" >
+      <option value=""></option>
+      <% categories.forEach((category) => { %>
+        <% if (category.id == post.category?.id) {%>
+          <option selected value="<%= category.id %>"><%= category.name %></option>
+        <%} else {%>
+          <option value="<%= category.id %>"><%= category.name %></option>
+        <%}%>
+        <% }) %>
+    </select><br>
+    <input class="form-input" type="text" name="newCategory" placeholder="Digite o nome da nova categoria"><br>
+    <button class="btn btn-success">Atualizar</button>
+  </form>
+</div>
+
+<div class="content" style="display: none;">
+  <%- post.body %>
+</div>
+
+
+<!-- tinyMCE -->
+<script src="/tinymce/js/tinymce/tinymce.min.js"></script>
+<script>
+  tinymce.init({
+    selector: "#post",
+    language: 'pt_BR',
+    plugins: [
+      'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+    ],
+    // Função quando o editor for carregado
+    init_instance_callback: () => {
+      tinymce.get("post").setContent(
+        document.getElementsByClassName('content')[0].innerHTML
+      );
+    }
+  })
+</script>
+
+
+<%- include('../../partials/footer.ejs'); %>

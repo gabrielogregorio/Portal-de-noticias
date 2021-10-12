@@ -1,0 +1,16 @@
+<%- include('../../partials/header_admin.ejs'); %>
+<link rel="stylesheet" href="/css/admin.css">
+
+
+<div class="container-500">
+  <h1 class="form-title-center">Fazer Login</h1>
+  <div class="form-login">
+    <form method="POST" action="/authenticate">
+      <input class="form-input" type="text" name="email" placeholder="Digite seu email">
+      <input class="form-input" type="password" name="password" placeholder="Criar uma senha">
+      <button class="btn btn-success">Fazer Login</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../../partials/footer.ejs'); %>

@@ -1,0 +1,109 @@
+<%- include('partials/header.ejs'); %>
+<link href="/css/principal.css" rel="stylesheet">
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item"><a href="/">Inicio</a></li>
+      <% categories.forEach(category => {%>
+        <li class="menu-superior-item"><a href="/?busca=&category=<%= category.id %>"><%= category.name %></a></li>
+      <%})%>
+    </ol>
+  </nav>
+</section>
+
+<% if (posts[0] != undefined) { %>
+  <section class="home-destaque">
+    <div class="home-destaque-item" style="<%= 'background-image: url(/images/posts/' + posts[0].img + ');'%>">
+      <div class="overlay"></div>
+      <div class="home-destaque-conteudo">
+        <div class="home-destaque-superior">
+          <div class="home-perfil-noticia">
+            <% if(posts[0].author?.img) { %>
+              <img src="/images/author/<%= posts[0].author?.img %>" alt="">
+            <% } %>
+
+            <% if(posts[0].author?.name) { %>
+              <p>Por <%= posts[0].author?.name %></p>
+            <% } else { %>
+              <p>Por autor do blog</p>
+            <% } %>
+          </div><!-- home-perfil-noticia -->
+
+          <div class="home-destaque-gostar-post">
+            <i class="fa fa-heart"></i>
+          </div><!-- home-destaque-gostar-post -->
+        </div><!-- home-destaque-superior -->
+
+        <div class="home-destaque-inferior">
+          <a href="/news/<%= posts[0].slug %>"> <h2> <%- posts[0].title %></h2> </a>
+          <!-- < + % + - => Remove o html  -->
+          <a href="/news/<%= posts[0].slug %>">
+            <p>
+              <%= posts[0].description %>
+            </p>
+          </a>
+        </div><!-- home-destaque-inferior -->
+      </div><!-- home-destaque-conteudo -->
+    </div><!-- home-destaque-item -->
+  </section>
+<% } %>
+
+<section class="home-titulo">
+  <% if (posts[0] != undefined) { %>
+    <h2>Ultimas publicações</h2>
+  <% } else { %>
+    <h2>Nenhum Artigo publicado!</h2>
+  <% } %>
+</section>
+
+<% if (posts[0] != undefined) { %>
+  <section class="base-noticias">
+    <div class="base-grid-noticias">
+      <div class="base-grid-bloco-conteudo">
+        <div class="home-grid-conteudo">
+
+          <% posts.slice(1, 5).forEach(post =>{ %>
+            <div class="card-publicacao">
+              <a href="/news/<%= post.slug %>"><img class="card-imagem" src="images/posts/<%= post.img %>" alt=""></a>
+              <p class="subtitulo"><%= post.category %></p>
+              <h3><a href="/news/<%= post.slug %>"><%= post.title %></a></h3>
+              <p><a href="/news/<%= post.slug %>"><%- post.description %></a></p>
+            </div><!-- card-publicacao -->
+          <% }) %>
+
+        </div><!-- home-grid-conteudo -->
+      </div><!-- base-grid-bloco-conteudo -->
+
+      <div class="base-grid-bloco-sidebar">
+        <div class="mais-lidas-titulo">
+          <h3>As mais lidas</h3>
+        </div><!-- mais-lidas-titulo -->
+        <div class="grid-noticias-mais-lidas">
+          <% postsMostViews?.slice(0, 4).forEach(post => {%>
+            <div class="grid-mais-lida-item">
+              <a href="/news/<%= post.slug %>"><img src="/images/posts/<%= post.img %>" alt=""></a>
+              <div class="grid-mais-lida-conteudo">
+                <a href="/news/<%= post.slug %>"><h3 class="grid-mais-lida-titulo"><%= post.title %></h3></a>
+                <a href="/news/<%= post.slug %>"><p><%= post.description.slice(0, 100) %></p></a>
+              </div><!-- grid-mais-lida-conteudo -->
+            </div><!-- grid-mais-lida-item -->
+          <% }) %>
+
+        </div><!-- grid-noticias-mais-lidas -->
+      </div><!-- base-grid-bloco-sidebar -->
+    </div><!-- grid-noticias -->
+  </section><!-- noticias -->
+
+
+  <div class="pagination">
+    <button class="pagination-btn-disable">Anterior </button>
+
+    <% if (proximaPagina) { %>
+      <a class="pagination-btn" href="/posts/page/2">Próximo</a>
+    <% } else { %>
+      <button class="pagination-btn-disable">Próximo</button>
+    <% } %>
+  </div>
+
+<% } %>
+<%- include('partials/footer.ejs'); %>

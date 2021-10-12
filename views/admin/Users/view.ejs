@@ -1,0 +1,91 @@
+<%- include('../../partials/header_admin.ejs'); %>
+<link rel="stylesheet" href="/css/admin.css">
+
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item menu-superior-disable">Usuários</li>
+      <li class="menu-superior-item"><a href="/admin/posts/view">Postagens</a></li>
+      <li class="menu-superior-item"><a href="/admin/categories/view">Categorias</a></li>
+    </ol>
+  </nav>
+</section>
+
+
+<section class="breadcrumb">
+  <nav>
+    <ol>
+      <li class="breadcrumb-item breadcrumb-active" aria-current="page">Usuários</li>
+    </ol>
+  </nav>
+</section>
+
+<div class="container">
+  <h2>Usuários</h2>
+  <a class="btn btn-success" href="/admin/users/new">Adicionar Usuário</a>
+
+  <div class="flex-view">
+    <% users.forEach(user => { %>
+      <div class="flex-view-item">
+
+        <div class="flex-view-item-perfil">
+          <div class="flex-view-item-perfil-img">
+            <% if (user.img) { %>
+              <img src="/images/author/<%= user.img %>">
+            <%} else { %>
+              <img src="/images/website/perfil.webp">
+            <%} %>
+          </div><!-- flex-view-item-perfil-img -->
+          <div class="flex-view-item-perfil-nome-email">
+            <a href="/admin/users/edit/<%= user.id %>"><%= user.name %></a>
+            <a href="/admin/users/edit/<%= user.id %>"><%= user.email %></a>
+          </div><!-- flex-view-item-perfil-nome-email -->
+        </div><!-- flex-view-item-name -->
+
+        <div class="flex-view-item-edit">
+          <a href="/admin/users/edit/<%= user.id %>"><i class="fas fa-pencil-alt"></i></a><br>
+        </div><!-- flex-view-item-edit -->
+
+        <div class="flex-view-item-trash">
+          <form method="POST" action="/admin/users/delete" onsubmit="confirmDeleteCategory(event, this);">
+            <input type="hidden" name="id" value="<%= user.id %>">
+            <button  type="submit"><i class="fas fa-trash"></i></button>
+          </form>
+        </div><!-- flex-view-item-trash -->
+      </div><!-- flex-view-item -->
+    <% }) %>
+  </div><!-- flex-view -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<script>
+  // Quer mesmo deletar a categoria
+  function confirmDeleteCategory(event, form) {
+    event.preventDefault();
+    var decision = confirm("Quer mesmo deletar este artigo?");
+    if (decision) {
+      form.submit();
+    } else {
+      console.log('Delete de artigo negado!')
+    }
+  }
+</script>
+
+<%- include('../../partials/footer.ejs'); %>

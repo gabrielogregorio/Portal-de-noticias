@@ -1,0 +1,43 @@
+<%- include('../../partials/header_admin.ejs'); %>
+<link rel="stylesheet" href="/css/admin.css">
+
+<section class="menu-superior">
+  <nav>
+    <ol>
+      <li class="menu-superior-item menu-superior-disable">Usuários</li>
+      <li class="menu-superior-item"><a href="/admin/posts/view">Postagens</a></li>
+      <li class="menu-superior-item"><a href="/admin/categories/view">Categorias</a></li>
+    </ol>
+  </nav>
+</section>
+
+<section class="breadcrumb">
+  <nav>
+    <ol>
+      <li class="breadcrumb-item"><a href="/admin/users/view ">Usuários</a></li>
+      <li class="breadcrumb-item breadcrumb-active" aria-current="page">Novo Usuário</li>
+    </ol>
+  </nav>
+</section>
+
+
+<div class="container-500">
+
+  <h1 class="form-title-center">Adicionar Usuário</h1>
+  <div class="form-login">
+    <form method="POST" action="/admin/users/save"  enctype="multipart/form-data">
+      <input class="form-input" type="text" name="name" placeholder="Digite seu nome">
+      <input class="form-input" type="text" name="email" placeholder="Digite seu e-mail">
+
+      <label for="imagem_post">Foto de perfil</label>
+      <input id="imagem_post" type="file" name="image">
+
+
+      <input class="form-input" type="text" name="password" placeholder="Criar uma senha">
+      <button class="btn btn-success">Adicionar Usuário</button>
+    </form>
+  </div>
+
+</div>
+
+<%- include('../../partials/footer.ejs'); %>
